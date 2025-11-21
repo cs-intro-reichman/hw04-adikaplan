@@ -36,12 +36,7 @@ public class ArrCharOps {
     /** Returns the char value at the specified index. Assume that the array is non-empty.
      */
     public static char charAt(char[] arr, int index) {
-        for(int i = 0; i < arr.length; i++){
-            if( i == index){
-                return arr[i];
-            }
-        }
-        return 0;
+        return arr[index];
     }
 
     /** If the two arrays have the same value in every index, 
@@ -99,17 +94,13 @@ public class ArrCharOps {
     public static int lastIndexOf(char[] arr, char ch) {
        if(arr.length == 0){
             return -1;
-        }int lastIndex = indexOf(arr , ch);
-        if (lastIndex == -1){
-            return -1;
-        }while(lastIndex < arr.length -1){
-           int prevLastIndex = lastIndex;
-            lastIndex = indexOf(arr , ch, lastIndex + 1);
-            if(lastIndex == -1){
-                return prevLastIndex;
-           }   
         }
-        return lastIndex;
+        for(int i = arr.length -1; i >= 0; i--){
+            if( charAt(arr , i) == ch){
+                return i;
+            }
+        }    
+        return -1;
     }
 
     /* Returns an array which is the concatanation of the two given arrays.
@@ -163,7 +154,7 @@ public class ArrCharOps {
        if(arr.length == 0){
         return 0;
        }
-       int hashCode = 0;
+       long hashCode = 0;
        int j = arr.length -1;
        for(int i = 0 ; i < arr.length; i++){
         hashCode = hashCode + arr[i]* (int)(Math.pow(7 , j));
@@ -198,17 +189,6 @@ public class ArrCharOps {
      *         return -2 if there is an error with the input.
      */
     public static int compareTo(String str1, String str2) {
-       String alphabet = "abcdefghijklmnopqrstuvwxyz";
-       String Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-       for(int i =0; i< str1.length(); i++){
-        if((Alphabet.indexOf(str1.charAt(i)) == -1) && (alphabet.indexOf(str1.charAt(i)) == -1)){
-            return -2;
-        }
-       }for(int i =0; i< str2.length(); i++){
-        if((Alphabet.indexOf(str2.charAt(i)) == -1) && (alphabet.indexOf(str2.charAt(i)) == -1)){
-            return -2;
-        }
-    }
        int loopIndex = str1.length();
        if(str2.length() < loopIndex){
         loopIndex = str2.length();
@@ -226,6 +206,5 @@ public class ArrCharOps {
        }else{
         return 0;
        }
-
         }
     }

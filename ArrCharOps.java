@@ -50,14 +50,13 @@ public class ArrCharOps {
     public static boolean equals(char[] arr1, char[] arr2) {
         if(arr1.length == 0 && arr2.length == 0){
             return true;
-        }else if (arr1.length == 0 && arr2.length > 0) {
-            return false; 
-        }else if(arr1.length > 0 && arr2.length == 0){
+        }else if(arr1.length != arr2.length){
             return false;
-        }
-        for(int i =0; i< arr1.length; i++){
-            if (charAt(arr1 , i) != charAt(arr2 , i)){
+        }else if(arr1.length == arr2.length){
+            for(int i =0; i< arr1.length; i++){
+                if(arr1[i] != arr2[i]){
                 return false;
+                }
             }
         }
      return true ;   
@@ -83,6 +82,8 @@ public class ArrCharOps {
     public static int indexOf(char[] arr, char ch, int fromIndex) {
         if(arr.length == 0){
             return -1;
+        }if(fromIndex > arr.length -1){
+            return -1;
         }
         for ( int i =fromIndex; i< arr.length; i++){
             if( charAt(arr , i) == ch){
@@ -98,11 +99,15 @@ public class ArrCharOps {
     public static int lastIndexOf(char[] arr, char ch) {
        if(arr.length == 0){
             return -1;
-        }if (indexOf(arr , ch) == -1){
-            return -1;
         }int lastIndex = indexOf(arr , ch);
-        while(indexOf(arr , ch, indexOf(arr , ch)) != -1){
-            lastIndex = indexOf(arr , ch, indexOf(arr , ch));  
+        if (lastIndex == -1){
+            return -1;
+        }while(lastIndex < arr.length -1){
+           int prevLastIndex = lastIndex;
+            lastIndex = indexOf(arr , ch, lastIndex + 1);
+            if(lastIndex == -1){
+                return prevLastIndex;
+           }   
         }
         return lastIndex;
     }
@@ -122,7 +127,7 @@ public class ArrCharOps {
             arr3[i] = arr1[i];
         }
         for(int j =arr1.length ; j< arr3.length; j++){
-            arr3[j] = arr2[j];
+            arr3[j] = arr2[j-arr1.length];
         }
         return arr3;
     }
@@ -135,10 +140,12 @@ public class ArrCharOps {
     public static char[] subArray(char[] arr, int beginIndex, int endIndex) {
        if(arr.length == 0){
         return null;
+       }if( endIndex <= beginIndex){
+        return null;
        }
         char[] subArray = new char[ endIndex - beginIndex];
-       for(int i = beginIndex; i < endIndex; i++){
         int j = 0;
+       for(int i = beginIndex; i < endIndex; i++){
         subArray[j] = arr[i];
         j++;
        }
@@ -191,51 +198,34 @@ public class ArrCharOps {
      *         return -2 if there is an error with the input.
      */
     public static int compareTo(String str1, String str2) {
-       String Alphabet = "abcdefghijklmnopqrstuvwxyz";
-       str1 = str1.toLowerCase();
-       str2 = str2.toLowerCase();
+       String alphabet = "abcdefghijklmnopqrstuvwxyz";
+       String Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
        for(int i =0; i< str1.length(); i++){
-        if(Alphabet.indexOf(str1.charAt(i)) == -1){
+        if((Alphabet.indexOf(str1.charAt(i)) == -1) && (alphabet.indexOf(str1.charAt(i)) == -1)){
             return -2;
         }
-       }
-       for(int i =0; i< str2.length(); i++){
-        if(Alphabet.indexOf(str2.charAt(i)) == -1){
+       }for(int i =0; i< str2.length(); i++){
+        if((Alphabet.indexOf(str2.charAt(i)) == -1) && (alphabet.indexOf(str2.charAt(i)) == -1)){
             return -2;
         }
-       }
-        char[] arr1 = new char [str1.length()];
-        for(int i = 0; i < str1.length(); i++){
-            arr1[i] = str1.charAt(i);
-        }char[] arr2 = new char [str2.length()];
-        for(int i = 0; i < str2.length(); i++){
-            arr2[i] = str2.charAt(i);
-        }
-
-       
-        if (Alphabet.indexOf(arr1[0]) < Alphabet.indexOf(arr2[0])){
-            return -1;
-            }
-        if(Alphabet.indexOf(arr1[0]) > Alphabet.indexOf(arr2[0])){
-            return 1;
-        }
-        if(Alphabet.indexOf(arr1[0]) == Alphabet.indexOf(arr2[0])){
-            for(int j =1; j < str1.length(); j++){
-                if(Alphabet.indexOf(arr1[j]) != Alphabet.indexOf(arr2[j])){
-                    if (Alphabet.indexOf(arr1[j]) < Alphabet.indexOf(arr2[j])){
-                        return -1;
-                    }
-                    if(Alphabet.indexOf(arr1[j]) > Alphabet.indexOf(arr2[j])){
-                        return 1;
-                    }
-                }
-            }
-            if(arr1.length < arr2.length){
-                return -1;
-            }else if(arr1.length > arr2.length){
-                return 1;
-            }
-        }
-        return 0;
     }
-}
+       int loopIndex = str1.length();
+       if(str2.length() < loopIndex){
+        loopIndex = str2.length();
+       }
+       for(int i = 0; i < loopIndex; i++){
+        if(str1.charAt(i) > str2.charAt(i)){
+            return 1;           
+        }else if(str1.charAt(i) < str2.charAt(i)){
+            return -1;
+        }   
+       }if(str1.length() < str2.length()){
+        return -1;
+       }else if(str1.length() > str2.length()){
+        return 1;
+       }else{
+        return 0;
+       }
+
+        }
+    }

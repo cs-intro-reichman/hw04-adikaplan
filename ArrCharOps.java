@@ -77,7 +77,7 @@ public class ArrCharOps {
     public static int indexOf(char[] arr, char ch, int fromIndex) {
         if(arr.length == 0){
             return -1;
-        }if(fromIndex > arr.length -1){
+        }else if(fromIndex > arr.length -1){
             return -1;
         }
         for ( int i =fromIndex; i< arr.length; i++){

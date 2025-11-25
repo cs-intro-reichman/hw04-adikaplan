@@ -21,6 +21,70 @@ public class KeywordsDetector {
     // Iterates through all the sentences.
     // If a sentence contains one or more of the kewords, prints it.
     public static void detectAndPrint(String[] sentences, String[] keywords) {
-        // Replace this comment with your code
+        for(int i = 0 ; i < sentences.length; i++){
+            String line = lowerCase(sentences[i]);
+            for(int j = 0; j < keywords.length; j++){
+                if(contains(line, lowerCase(keywords[j])) == true){
+                    System.out.println(sentences[i]);
+
+                }
+            }
+        }
     }
+
+
+
+    public static String lowerCase(String str) {
+       if( str == null){
+        return "";
+       }
+        String strLower = "";
+        for(int i = 0; i< str.length(); i++){
+            if(str.charAt(i) >= 'A' && str.charAt(i) <= 'Z'){
+               strLower = strLower + (char)(str.charAt(i) + 32);
+            }else{
+                strLower = strLower + (str.charAt(i));
+            }
+        }
+        return strLower;
+    }
+
+    public static boolean contains(String str1, String str2) {
+        if(str2.length() == 0){
+            return true;
+        }
+        if(str1 == null){
+            return false;
+        }
+        if(str1.length() < str2.length()){
+            return false;
+        }
+        for(int i =0; i<str1.length(); i++){
+            if (str1.charAt(i) == str2.charAt(0)){
+               if(stringMatch(str1,str2,i) == true){
+                return true;
+               }
+            } 
+            }
+        return false;
+    }
+
+
+
+    public static boolean stringMatch(String str1, String str2, int startIndex) {
+        if((str1.length()-startIndex) < str2.length()){
+            return false;
+        }
+        int j=1;
+        for(int i = startIndex+1; i < startIndex + str2.length(); i++){
+            if(str1.charAt(i) != str2.charAt(j)){
+                return false;
+            }
+            j++;
+        }
+    return true;
 }
+}
+
+
+
